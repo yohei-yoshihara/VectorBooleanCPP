@@ -37,8 +37,6 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 namespace fb {
 
-extern const nullptr_t nil;
-
 using FBFloat = double;
 
 struct FBPoint {
@@ -97,18 +95,6 @@ inline bool FBPointInRect(const FBPoint &p, const FBRect &rect) {
 inline bool FBIsEmptyRect(FBRect rect) {
     return (rect.size.width <= 0.0 || rect.size.height <= 0.0);
 }
-
-// inline FBRect FBUnionRect(const FBRect &aRect, const FBRect &bRect) {
-//     if (FBIsEmptyRect(aRect)) return bRect;
-//     if (FBIsEmptyRect(bRect)) return aRect;
-
-//     FBFloat minX = std::min(FBMinX(aRect), FBMinX(bRect));
-//     FBFloat minY = std::min(FBMinY(aRect), FBMinY(bRect));
-//     FBFloat maxX = std::max(FBMaxX(aRect), FBMaxX(bRect));
-//     FBFloat maxY = std::max(FBMaxY(aRect), FBMaxY(bRect));
-
-//     return FBMakeRect(minX, minY, maxX - minX, maxY - minY);
-// }
 
 template<typename T>
 std::string arrayFormatter(const std::vector<std::shared_ptr<T>> &array) {

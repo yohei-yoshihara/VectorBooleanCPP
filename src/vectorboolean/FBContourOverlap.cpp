@@ -196,7 +196,7 @@ bool FBContourOverlap::isEmpty() { return _runs.size() == 0; }
 
 std::shared_ptr<FBBezierContour> FBContourOverlap::contour1() {
   if (_runs.size() == 0) {
-    return nil;
+    return nullptr;
   }
 
   auto run = _runs[0];
@@ -205,7 +205,7 @@ std::shared_ptr<FBBezierContour> FBContourOverlap::contour1() {
 
 std::shared_ptr<FBBezierContour> FBContourOverlap::contour2() {
   if (_runs.size() == 0) {
-    return nil;
+    return nullptr;
   }
 
   auto run = _runs[0];
@@ -273,7 +273,7 @@ bool FBEdgeOverlapRun::doesContainParameter(FBFloat parameter, std::shared_ptr<F
   }
 
   // Find the FBEdgeOverlap that contains the crossing (if it exists)
-  std::shared_ptr<FBEdgeOverlap> containingOverlap = nil;
+  std::shared_ptr<FBEdgeOverlap> containingOverlap = nullptr;
   for (auto &overlap : _overlaps) {
     if (overlap->edge1() == edge || overlap->edge2() == edge) {
       containingOverlap = overlap;
@@ -282,7 +282,7 @@ bool FBEdgeOverlapRun::doesContainParameter(FBFloat parameter, std::shared_ptr<F
   }
 
   // The edge it's attached to isn't here
-  if (containingOverlap == nil) {
+  if (containingOverlap == nullptr) {
     return false;
   }
 

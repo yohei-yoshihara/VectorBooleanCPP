@@ -52,7 +52,7 @@ std::shared_ptr<FBEdgeCrossing> FBEdgeCrossing::previous() {
 
 std::shared_ptr<FBEdgeCrossing> FBEdgeCrossing::nextNonself() {
   auto next = this->next();
-  while (next != nil && next->isSelfCrossing()) {
+  while (next != nullptr && next->isSelfCrossing()) {
     next = next->next();
   }
   return next;
@@ -60,7 +60,7 @@ std::shared_ptr<FBEdgeCrossing> FBEdgeCrossing::nextNonself() {
 
 std::shared_ptr<FBEdgeCrossing> FBEdgeCrossing::previousNonself() {
   auto previous = this->previous();
-  while (previous != nil && previous->isSelfCrossing()) {
+  while (previous != nullptr && previous->isSelfCrossing()) {
     previous = previous->previous();
   }
   return previous;
@@ -80,7 +80,7 @@ std::shared_ptr<FBBezierCurve> FBEdgeCrossing::curve() { return _edge.lock(); }
 
 std::shared_ptr<FBBezierCurve> FBEdgeCrossing::leftCurve() {
   if (isAtStart()) {
-    return nil;
+    return nullptr;
   }
 
   if (_edge.lock() == _intersection->curve1()) {
@@ -92,7 +92,7 @@ std::shared_ptr<FBBezierCurve> FBEdgeCrossing::leftCurve() {
 
 std::shared_ptr<FBBezierCurve> FBEdgeCrossing::rightCurve() {
   if (isAtEnd()) {
-    return nil;
+    return nullptr;
   }
 
   if (_edge.lock() == _intersection->curve1()) {

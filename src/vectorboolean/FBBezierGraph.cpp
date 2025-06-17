@@ -462,7 +462,7 @@ void FBBezierGraph::insertCrossingsWithBezierGraph(std::shared_ptr<FBBezierGraph
                                                   ourEdge->addCrossing(ourCrossing);
                                                   theirEdge->addCrossing(theirCrossing);
                                                 });
-          if (intersectRange != nil) {
+          if (intersectRange != nullptr) {
             overlap->addOverlap(intersectRange, ourEdge, theirEdge);
           }
         } // end theirEdges
@@ -1061,7 +1061,7 @@ std::shared_ptr<FBEdgeCrossing> FBBezierGraph::firstUnprocessedCrossing() {
 
   for (auto contour : _contours) {
     for (auto edge : contour->edges()) {
-      std::shared_ptr<FBEdgeCrossing> unprocessedCrossing = nil;
+      std::shared_ptr<FBEdgeCrossing> unprocessedCrossing = nullptr;
       edge->crossingsWithBlock([&](std::shared_ptr<FBEdgeCrossing> crossing, bool *stop) {
         if (crossing->isSelfCrossing()) {
           return;
@@ -1071,12 +1071,12 @@ std::shared_ptr<FBEdgeCrossing> FBBezierGraph::firstUnprocessedCrossing() {
           *stop = true;
         }
       });
-      if (unprocessedCrossing != nil) {
+      if (unprocessedCrossing != nullptr) {
         return unprocessedCrossing;
       }
     }
   }
-  return nil;
+  return nullptr;
 }
 
 std::shared_ptr<FBBezierGraph> FBBezierGraph::bezierGraphFromIntersections() {
@@ -1094,7 +1094,7 @@ std::shared_ptr<FBBezierGraph> FBBezierGraph::bezierGraphFromIntersections() {
 
   // Find the first crossing to start one
   auto crossing = firstUnprocessedCrossing();
-  while (crossing != nil) {
+  while (crossing != nullptr) {
     // This is the start of a contour, so create one
     auto contour = std::make_shared<FBBezierContour>();
     result->addContour(contour);
@@ -1106,7 +1106,7 @@ std::shared_ptr<FBBezierGraph> FBBezierGraph::bezierGraphFromIntersections() {
       if (crossing->isEntry()) {
         // Keep going to next until meet a crossing
         contour->addCurve(crossing, crossing->nextNonself());
-        if (crossing->nextNonself() == nil) {
+        if (crossing->nextNonself() == nullptr) {
           // We hit the end of the edge without finding another crossing, so go find the next
           // crossing
           auto edge = crossing->edge()->next();
@@ -1118,14 +1118,14 @@ std::shared_ptr<FBBezierGraph> FBBezierGraph::bezierGraphFromIntersections() {
           }
           // We have an edge that has at least one crossing
           crossing = edge->firstNonselfCrossing();
-          contour->addCurve(nil, crossing); // add the curve up to the crossing
+          contour->addCurve(nullptr, crossing); // add the curve up to the crossing
         } else {
           crossing = crossing->nextNonself(); // this edge has a crossing, so just move to it
         }
       } else {
         // Keep going to previous until meet a crossing
         contour->addReverseCurve(crossing->previousNonself(), crossing);
-        if (crossing->previousNonself() == nil) {
+        if (crossing->previousNonself() == nullptr) {
           // we hit the end of the edge without finding another crossing, so go find the previous
           // crossing
           auto edge = crossing->edge()->previous();
@@ -1137,7 +1137,7 @@ std::shared_ptr<FBBezierGraph> FBBezierGraph::bezierGraphFromIntersections() {
           }
           // We have an edge that has at least one edge
           crossing = edge->lastNonselfCrossing();
-          contour->addReverseCurve(crossing, nil); // add the curve up to the crossing
+          contour->addReverseCurve(crossing, nullptr); // add the curve up to the crossing
         } else {
           crossing = crossing->previousNonself();
         }
@@ -1194,7 +1194,7 @@ FBBezierGraph::FBBezierGraph(const FBBezierPath &path) {
   //  see a move to in the NSBezierPath, that's a new contour.
   FBPoint lastPoint = FBZeroPoint;
   bool wasClosed = false;
-  std::shared_ptr<FBBezierContour> contour = nil;
+  std::shared_ptr<FBBezierContour> contour = nullptr;
   for (size_t i = 0; i < path.size(); i++) {
     const auto &element = path[i];
 
@@ -1202,7 +1202,7 @@ FBBezierGraph::FBBezierGraph(const FBBezierPath &path) {
     case FBBezierPath::Type::move: {
       // if previous contour wasn't closed, close it
 
-      if (!wasClosed && contour != nil) {
+      if (!wasClosed && contour != nullptr) {
         contour->close();
       }
 
@@ -1264,7 +1264,7 @@ FBBezierGraph::FBBezierGraph(const FBBezierPath &path) {
     }
   }
 
-  if (!wasClosed && contour != nil) {
+  if (!wasClosed && contour != nullptr) {
     contour->close();
   }
 

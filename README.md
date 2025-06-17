@@ -2,14 +2,12 @@
 
 This project is a port of the original Objective-C code to C++.
 
-
-
 Original article and code:
 
 * Article: https://losingfight.com/blog/2011/07/07/how-to-implement-boolean-operations-on-bezier-paths-part-1/
 * Code: https://github.com/adamwulf/vectorboolean
 
-## LICENSE
+## License
 
 Copyright (c) 2011 Andrew Finnell
 

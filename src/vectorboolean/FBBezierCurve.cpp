@@ -174,10 +174,10 @@ static FBPoint BezierWithPoints(size_t degree, FBPoint *bezierPoints, FBFloat pa
   }
 
   // If the caller is asking for the resulting bezier curves, start filling those in
-  if (leftCurve != nil) {
+  if (leftCurve != nullptr) {
     leftCurve[0] = points[0];
   }
-  if (rightCurve != nil) {
+  if (rightCurve != nullptr) {
     rightCurve[degree] = points[degree];
   }
 
@@ -187,10 +187,10 @@ static FBPoint BezierWithPoints(size_t degree, FBPoint *bezierPoints, FBFloat pa
       points[i].y = (1.0 - parameter) * points[i].y + parameter * points[i + 1].y;
     }
 
-    if (leftCurve != nil) {
+    if (leftCurve != nullptr) {
       leftCurve[k] = points[0];
     }
-    if (rightCurve != nil) {
+    if (rightCurve != nullptr) {
       rightCurve[degree - k] = points[degree - k];
     }
   }
@@ -787,10 +787,10 @@ static FBPoint FBBezierCurveDataPointAtParameter(FBBezierCurveData me, FBFloat p
 
   FBPoint point = BezierWithPoints(3, points, parameter, leftCurve, rightCurve);
 
-  if (leftBezierCurve != nil) {
+  if (leftBezierCurve != nullptr) {
     *leftBezierCurve = FBBezierCurveDataMake(leftCurve[0], leftCurve[1], leftCurve[2], leftCurve[3], me.isStraightLine);
   }
-  if (rightBezierCurve != nil) {
+  if (rightBezierCurve != nullptr) {
     *rightBezierCurve
         = FBBezierCurveDataMake(rightCurve[0], rightCurve[1], rightCurve[2], rightCurve[3], me.isStraightLine);
   }
@@ -801,7 +801,7 @@ static FBBezierCurveData FBBezierCurveDataSubcurveWithRange(FBBezierCurveData me
   // Return a bezier curve representing the parameter range specified. We do this by splitting
   //  twice: once on the minimum, the splitting the result of that on the maximum.
   FBBezierCurveData upperCurve = {};
-  FBBezierCurveDataPointAtParameter(me, range.minimum, nil, &upperCurve);
+  FBBezierCurveDataPointAtParameter(me, range.minimum, nullptr, &upperCurve);
   if (range.minimum == 1.0) {
     return upperCurve; // avoid the divide by zero below
   }
@@ -809,7 +809,7 @@ static FBBezierCurveData FBBezierCurveDataSubcurveWithRange(FBBezierCurveData me
   FBFloat adjustedMaximum = (range.maximum - range.minimum) / (1.0 - range.minimum);
 
   FBBezierCurveData lowerCurve = {};
-  FBBezierCurveDataPointAtParameter(upperCurve, adjustedMaximum, &lowerCurve, nil);
+  FBBezierCurveDataPointAtParameter(upperCurve, adjustedMaximum, &lowerCurve, nullptr);
   return lowerCurve;
 }
 
@@ -1053,9 +1053,9 @@ static FBRect FBBezierCurveDataBounds(FBBezierCurveData *me) {
     bounds = FBMakeRect(topLeft.x, topLeft.y, bottomRight.x - topLeft.x, bottomRight.y - topLeft.y);
   } else {
     // Start with the end points
-    FBPoint topLeft = FBBezierCurveDataPointAtParameter(*me, 0, nil, nil);
+    FBPoint topLeft = FBBezierCurveDataPointAtParameter(*me, 0, nullptr, nullptr);
     FBPoint bottomRight = topLeft;
-    FBPoint lastPoint = FBBezierCurveDataPointAtParameter(*me, 1, nil, nil);
+    FBPoint lastPoint = FBBezierCurveDataPointAtParameter(*me, 1, nullptr, nullptr);
     FBExpandBoundsByPoint(&topLeft, &bottomRight, lastPoint);
 
     // Find the roots, which should be the extremities
@@ -1069,7 +1069,7 @@ static FBRect FBBezierCurveDataBounds(FBBezierCurveData *me) {
         continue;
       }
 
-      FBPoint location = FBBezierCurveDataPointAtParameter(*me, t, nil, nil);
+      FBPoint location = FBBezierCurveDataPointAtParameter(*me, t, nullptr, nullptr);
       FBExpandBoundsByPoint(&topLeft, &bottomRight, location);
     }
 
@@ -1083,7 +1083,7 @@ static FBRect FBBezierCurveDataBounds(FBBezierCurveData *me) {
         continue;
       }
 
-      FBPoint location = FBBezierCurveDataPointAtParameter(*me, t, nil, nil);
+      FBPoint location = FBBezierCurveDataPointAtParameter(*me, t, nullptr, nullptr);
       FBExpandBoundsByPoint(&topLeft, &bottomRight, location);
     }
 
@@ -1224,7 +1224,7 @@ static FBBezierCurveLocation FBBezierCurveDataClosestLocationToPoint(FBBezierCur
   FBFloat parameter = 0.0;
 
   FBFindBezierRoots(bezierPoints, 5, [&](FBFloat root) {
-    FBPoint location = FBBezierCurveDataPointAtParameter(me, root, nil, nil);
+    FBPoint location = FBBezierCurveDataPointAtParameter(me, root, nullptr, nullptr);
     FBFloat theDistance = FBDistanceBetweenPoints(location, point);
     if (theDistance < distance) {
       distance = theDistance;
@@ -1299,12 +1299,12 @@ static bool FBBezierCurveDataCheckForOverlapRange(FBBezierCurveData me,
                                                   std::shared_ptr<const FBBezierCurve> originalThem,
                                                   FBBezierCurveData us, FBBezierCurveData them) {
   if (FBBezierCurveDataAreCurvesEqual(us, them)) {
-    if (intersectRange != nil) {
+    if (intersectRange != nullptr) {
       *intersectRange = std::make_shared<FBBezierIntersectRange>(originalUs, *usRange, originalThem, *themRange, false);
     }
     return true;
   } else if (FBBezierCurveDataAreCurvesEqual(us, FBBezierCurveDataReversed(them))) {
-    if (intersectRange != nil) {
+    if (intersectRange != nullptr) {
       *intersectRange = std::make_shared<FBBezierIntersectRange>(originalUs, *usRange, originalThem, *themRange, true);
     }
     return true;
@@ -1402,7 +1402,7 @@ static FBFloat FBBezierCurveDataRefineParameter(FBBezierCurveData me, FBFloat pa
   FBPoint bezierPoints[4] = {me.endPoint1, me.controlPoint1, me.controlPoint2, me.endPoint2};
 
   // Compute Q(parameter)
-  FBPoint qAtParameter = BezierWithPoints(3, bezierPoints, parameter, nil, nil);
+  FBPoint qAtParameter = BezierWithPoints(3, bezierPoints, parameter, nullptr, nullptr);
 
   // Compute Q'(parameter)
   FBPoint qPrimePoints[3] = {};
@@ -1410,7 +1410,7 @@ static FBFloat FBBezierCurveDataRefineParameter(FBBezierCurveData me, FBFloat pa
     qPrimePoints[i].x = (bezierPoints[i + 1].x - bezierPoints[i].x) * 3.0;
     qPrimePoints[i].y = (bezierPoints[i + 1].y - bezierPoints[i].y) * 3.0;
   }
-  FBPoint qPrimeAtParameter = BezierWithPoints(2, qPrimePoints, parameter, nil, nil);
+  FBPoint qPrimeAtParameter = BezierWithPoints(2, qPrimePoints, parameter, nullptr, nullptr);
 
   // Compute Q''(parameter)
   FBPoint qPrimePrimePoints[2] = {};
@@ -1418,7 +1418,7 @@ static FBFloat FBBezierCurveDataRefineParameter(FBBezierCurveData me, FBFloat pa
     qPrimePrimePoints[i].x = (qPrimePoints[i + 1].x - qPrimePoints[i].x) * 2.0;
     qPrimePrimePoints[i].y = (qPrimePoints[i + 1].y - qPrimePoints[i].y) * 2.0;
   }
-  FBPoint qPrimePrimeAtParameter = BezierWithPoints(1, qPrimePrimePoints, parameter, nil, nil);
+  FBPoint qPrimePrimeAtParameter = BezierWithPoints(1, qPrimePrimePoints, parameter, nullptr, nullptr);
 
   // Compute f(parameter) and f'(parameter)
   FBPoint qMinusPoint = FBSubtractPoint(qAtParameter, point);
@@ -1433,11 +1433,11 @@ static FBFloat FBBezierCurveDataRefineParameter(FBBezierCurveData me, FBFloat pa
 static std::shared_ptr<FBBezierIntersectRange>
 FBBezierCurveDataMergeIntersectRange(std::shared_ptr<FBBezierIntersectRange> intersectRange,
                                      std::shared_ptr<FBBezierIntersectRange> otherIntersectRange) {
-  if (otherIntersectRange == nil) {
+  if (otherIntersectRange == nullptr) {
     return intersectRange;
   }
 
-  if (intersectRange == nil) {
+  if (intersectRange == nullptr) {
     return otherIntersectRange;
   }
 
@@ -1606,19 +1606,19 @@ static void FBBezierCurveDataIntersectionsWithBezierCurve(FBBezierCurveData me, 
 
         if (!range1ConvergedAlready && !range2ConvergedAlready && depth < maxDepth) {
           // Compute the intersections between the two halves of us and them
-          std::shared_ptr<FBBezierIntersectRange> leftIntersectRange = nil;
+          std::shared_ptr<FBBezierIntersectRange> leftIntersectRange = nullptr;
           FBBezierCurveDataIntersectionsWithBezierCurve(us1, them, &usRange1, &themRangeCopy1, originalUs, originalThem,
                                                         &leftIntersectRange, depth + 1, outputBlock, stop);
-          if (intersectRange != nil) {
+          if (intersectRange != nullptr) {
             *intersectRange = FBBezierCurveDataMergeIntersectRange(*intersectRange, leftIntersectRange);
           }
           if (*stop) {
             return;
           }
-          std::shared_ptr<FBBezierIntersectRange> rightIntersectRange = nil;
+          std::shared_ptr<FBBezierIntersectRange> rightIntersectRange = nullptr;
           FBBezierCurveDataIntersectionsWithBezierCurve(us2, them, &usRange2, &themRangeCopy2, originalUs, originalThem,
                                                         &rightIntersectRange, depth + 1, outputBlock, stop);
-          if (intersectRange != nil) {
+          if (intersectRange != nullptr) {
             *intersectRange = FBBezierCurveDataMergeIntersectRange(*intersectRange, rightIntersectRange);
           }
           return;
@@ -1641,20 +1641,20 @@ static void FBBezierCurveDataIntersectionsWithBezierCurve(FBBezierCurveData me, 
 
         if (!range1ConvergedAlready && !range2ConvergedAlready && depth < maxDepth) {
           // Compute the intersections between the two halves of them and us
-          std::shared_ptr<FBBezierIntersectRange> leftIntersectRange = nil;
+          std::shared_ptr<FBBezierIntersectRange> leftIntersectRange = nullptr;
           FBBezierCurveDataIntersectionsWithBezierCurve(us, them1, &usRangeCopy1, &themRange1, originalUs, originalThem,
                                                         &leftIntersectRange, depth + 1, outputBlock, stop);
-          if (intersectRange != nil) {
+          if (intersectRange != nullptr) {
             *intersectRange = FBBezierCurveDataMergeIntersectRange(*intersectRange, leftIntersectRange);
           }
 
           if (*stop) {
             return;
           }
-          std::shared_ptr<FBBezierIntersectRange> rightIntersectRange = nil;
+          std::shared_ptr<FBBezierIntersectRange> rightIntersectRange = nullptr;
           FBBezierCurveDataIntersectionsWithBezierCurve(us, them2, &usRangeCopy2, &themRange2, originalUs, originalThem,
                                                         &rightIntersectRange, depth + 1, outputBlock, stop);
-          if (intersectRange != nil) {
+          if (intersectRange != nullptr) {
             *intersectRange = FBBezierCurveDataMergeIntersectRange(*intersectRange, rightIntersectRange);
           }
 
@@ -1709,7 +1709,7 @@ static void FBBezierCurveDataIntersectionsWithBezierCurve(FBBezierCurveData me, 
   }
   if (FBRangeHasConverged(*usRange, places) && !FBRangeHasConverged(*themRange, places)) {
     // Refine the them range since it didn't converge
-    FBPoint intersectionPoint = FBBezierCurveDataPointAtParameter(originalUsData, FBRangeAverage(*usRange), nil, nil);
+    FBPoint intersectionPoint = FBBezierCurveDataPointAtParameter(originalUsData, FBRangeAverage(*usRange), nullptr, nullptr);
     FBFloat refinedParameter = FBRangeAverage(*themRange); // Although the range didn't converge, it
                                                            // should be a reasonable approximation
                                                            // which is all Newton needs
@@ -1723,7 +1723,7 @@ static void FBBezierCurveDataIntersectionsWithBezierCurve(FBBezierCurveData me, 
   } else if (!FBRangeHasConverged(*usRange, places) && FBRangeHasConverged(*themRange, places)) {
     // Refine the us range since it didn't converge
     FBPoint intersectionPoint
-        = FBBezierCurveDataPointAtParameter(originalThemData, FBRangeAverage(*themRange), nil, nil);
+        = FBBezierCurveDataPointAtParameter(originalThemData, FBRangeAverage(*themRange), nullptr, nullptr);
     FBFloat refinedParameter = FBRangeAverage(*usRange); // Although the range didn't converge, it
                                                          // should be a reasonable approximation
                                                          // which is all Newton needs
@@ -1747,8 +1747,8 @@ static void FBBezierCurveDataIntersectionsWithBezierCurve(FBBezierCurveData me, 
   if (!hadConverged) {
     // Since one of them didn't converge, we need to make sure they actually intersect. Compute the
     // point from both and compare
-    FBPoint intersectionPoint = FBBezierCurveDataPointAtParameter(originalUsData, FBRangeAverage(*usRange), nil, nil);
-    FBPoint checkPoint = FBBezierCurveDataPointAtParameter(originalThemData, FBRangeAverage(*themRange), nil, nil);
+    FBPoint intersectionPoint = FBBezierCurveDataPointAtParameter(originalUsData, FBRangeAverage(*usRange), nullptr, nullptr);
+    FBPoint checkPoint = FBBezierCurveDataPointAtParameter(originalThemData, FBRangeAverage(*themRange), nullptr, nullptr);
     if (!FBArePointsCloseWithOptions(intersectionPoint, checkPoint, 1e-3)) {
       return;
     }
@@ -1896,13 +1896,13 @@ FBPoint FBBezierCurve::pointFromRightOffset(FBFloat offset) const {
   FBFloat len = length();
   offset = std::min(offset, len);
   FBFloat time = 1.0 - (offset / len);
-  return FBBezierCurveDataPointAtParameter(_data, time, nil, nil);
+  return FBBezierCurveDataPointAtParameter(_data, time, nullptr, nullptr);
 }
 FBPoint FBBezierCurve::pointFromLeftOffset(FBFloat offset) const {
   FBFloat len = length();
   offset = std::min(offset, len);
   FBFloat time = offset / len;
-  return FBBezierCurveDataPointAtParameter(_data, time, nil, nil);
+  return FBBezierCurveDataPointAtParameter(_data, time, nullptr, nullptr);
 }
 
 FBPoint FBBezierCurve::tangentFromRightOffset(FBFloat offset) const {
@@ -1920,7 +1920,7 @@ FBPoint FBBezierCurve::tangentFromRightOffset(FBFloat offset) const {
     }
     FBFloat time = 1.0 - (offset / length);
     FBBezierCurveData leftCurve = {};
-    FBBezierCurveDataPointAtParameter(_data, time, &leftCurve, nil);
+    FBBezierCurveDataPointAtParameter(_data, time, &leftCurve, nullptr);
     returnValue = FBSubtractPoint(leftCurve.controlPoint2, leftCurve.endPoint2);
   }
 
@@ -1941,7 +1941,7 @@ FBPoint FBBezierCurve::tangentFromLeftOffset(FBFloat offset) const {
     }
     FBFloat time = offset / length;
     FBBezierCurveData rightCurve = {};
-    FBBezierCurveDataPointAtParameter(_data, time, nil, &rightCurve);
+    FBBezierCurveDataPointAtParameter(_data, time, nullptr, &rightCurve);
     returnValue = FBSubtractPoint(rightCurve.controlPoint1, rightCurve.endPoint1);
   }
 
@@ -2116,7 +2116,7 @@ std::shared_ptr<FBEdgeCrossing> FBBezierCurve::nextCrossing(std::shared_ptr<FBEd
 
 std::shared_ptr<FBEdgeCrossing> FBBezierCurve::previousCrossing(std::shared_ptr<FBEdgeCrossing> crossing) {
   if (crossing->index() == 0) {
-    return nil;
+    return nullptr;
   }
 
   return _crossings[crossing->index() - 1];
@@ -2214,13 +2214,13 @@ bool FBBezierCurve::crossesEdge(std::shared_ptr<FBBezierCurve> edge2,
   FBPoint edge2Tangents[] = {FBZeroPoint, FBZeroPoint};
   FBFloat offset = 0.0;
 
-  std::shared_ptr<FBBezierCurve> edge1LeftCurve = nil;
-  std::shared_ptr<FBBezierCurve> edge1RightCurve = nil;
+  std::shared_ptr<FBBezierCurve> edge1LeftCurve = nullptr;
+  std::shared_ptr<FBBezierCurve> edge1RightCurve = nullptr;
   FBFindEdge1TangentCurves(shared_from_this(), intersection, &edge1LeftCurve, &edge1RightCurve);
   FBFloat edge1Length = std::min(edge1LeftCurve->length(), edge1RightCurve->length());
 
-  std::shared_ptr<FBBezierCurve> edge2LeftCurve = nil;
-  std::shared_ptr<FBBezierCurve> edge2RightCurve = nil;
+  std::shared_ptr<FBBezierCurve> edge2LeftCurve = nullptr;
+  std::shared_ptr<FBBezierCurve> edge2RightCurve = nullptr;
   FBFindEdge2TangentCurves(edge2, intersection, &edge2LeftCurve, &edge2RightCurve);
   FBFloat edge2Length = std::min(edge2LeftCurve->length(), edge2RightCurve->length());
 
@@ -2245,13 +2245,13 @@ bool FBBezierCurve::crossesEdge(std::shared_ptr<FBBezierCurve> edge2,
   FBPoint edge2Tangents[] = {FBZeroPoint, FBZeroPoint};
   FBFloat offset = 0.0;
 
-  std::shared_ptr<FBBezierCurve> edge1LeftCurve = nil;
-  std::shared_ptr<FBBezierCurve> edge1RightCurve = nil;
+  std::shared_ptr<FBBezierCurve> edge1LeftCurve = nullptr;
+  std::shared_ptr<FBBezierCurve> edge1RightCurve = nullptr;
   FBComputeEdge1RangeTangentCurves(shared_from_this(), intersectRange, &edge1LeftCurve, &edge1RightCurve);
   FBFloat edge1Length = std::min(edge1LeftCurve->length(), edge1RightCurve->length());
 
-  std::shared_ptr<FBBezierCurve> edge2LeftCurve = nil;
-  std::shared_ptr<FBBezierCurve> edge2RightCurve = nil;
+  std::shared_ptr<FBBezierCurve> edge2LeftCurve = nullptr;
+  std::shared_ptr<FBBezierCurve> edge2RightCurve = nullptr;
   FBComputeEdge2RangeTangentCurves(edge2, intersectRange, &edge2LeftCurve, &edge2RightCurve);
   FBFloat edge2Length = std::min(edge2LeftCurve->length(), edge2RightCurve->length());
 

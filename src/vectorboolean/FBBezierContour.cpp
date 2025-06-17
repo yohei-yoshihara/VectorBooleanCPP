@@ -56,14 +56,14 @@ void FBBezierContour::addCurve(std::shared_ptr<FBEdgeCrossing> startCrossing,
   // First construct the curve that we're going to add, by seeing which crossing
   //  is nil. If the crossing isn't given go to the end of the edge on that
   //  side.
-  std::shared_ptr<FBBezierCurve> curve = nil;
-  if (startCrossing == nil && endCrossing != nil) {
+  std::shared_ptr<FBBezierCurve> curve = nullptr;
+  if (startCrossing == nullptr && endCrossing != nullptr) {
     // From start to endCrossing
     curve = endCrossing->leftCurve();
-  } else if (startCrossing != nil && endCrossing == nil) {
+  } else if (startCrossing != nullptr && endCrossing == nullptr) {
     // From startCrossing to end
     curve = startCrossing->rightCurve();
-  } else if (startCrossing != nil && endCrossing != nil) {
+  } else if (startCrossing != nullptr && endCrossing != nullptr) {
     // From startCrossing to endCrossing
     curve
         = startCrossing->curve()->subcurveWithRange(FBRangeMake(startCrossing->parameter(), endCrossing->parameter()));
@@ -75,7 +75,7 @@ void FBBezierContour::addReverseCurve(std::shared_ptr<FBBezierCurve> curve) {
   // Just reverse the points on the curve. Need to do this to ensure the end
   // point from one edge, matches the start
   //  on the next edge.
-  if (curve == nil) {
+  if (curve == nullptr) {
     return;
   }
   addCurve(curve->reversedCurve());
@@ -86,14 +86,14 @@ void FBBezierContour::addReverseCurve(std::shared_ptr<FBEdgeCrossing> startCross
   // First construct the curve that we're going to add, by seeing which crossing
   //  is nil. If the crossing isn't given go to the end of the edge on that
   //  side.
-  std::shared_ptr<FBBezierCurve> curve = nil;
-  if (startCrossing == nil && endCrossing != nil) {
+  std::shared_ptr<FBBezierCurve> curve = nullptr;
+  if (startCrossing == nullptr && endCrossing != nullptr) {
     // From start to endCrossing
     curve = endCrossing->leftCurve();
-  } else if (startCrossing != nil && endCrossing == nil) {
+  } else if (startCrossing != nullptr && endCrossing == nullptr) {
     // From startCrossing to end
     curve = startCrossing->rightCurve();
-  } else if (startCrossing != nil && endCrossing != nil) {
+  } else if (startCrossing != nullptr && endCrossing != nullptr) {
     // From startCrossing to endCrossing
     curve
         = startCrossing->curve()->subcurveWithRange(FBRangeMake(startCrossing->parameter(), endCrossing->parameter()));
@@ -206,12 +206,12 @@ void FBBezierContour::intersectionsWithRay(
           // Make sure we don't count the same intersection twice. This happens
           // when the ray crosses at
           //  start or end of an edge.
-          if (intersection->isAtStartOfCurve2() && previousIntersection != nil) {
+          if (intersection->isAtStartOfCurve2() && previousIntersection != nullptr) {
             auto previousEdge = edge->previous();
             if (previousIntersection->isAtEndPointOfCurve2() && previousEdge == previousIntersection->curve2()) {
               return;
             }
-          } else if (intersection->isAtEndPointOfCurve2() && firstIntersection != nil) {
+          } else if (intersection->isAtEndPointOfCurve2() && firstIntersection != nullptr) {
             auto nextEdge = edge->next();
             if (firstIntersection->isAtStartOfCurve2() && nextEdge == firstIntersection->curve2()) {
               return;
@@ -219,12 +219,12 @@ void FBBezierContour::intersectionsWithRay(
           }
 
           block(intersection);
-          if (firstIntersection == nil) {
+          if (firstIntersection == nullptr) {
             firstIntersection = intersection;
           }
           previousIntersection = intersection;
         });
-    if (intersectRange != nil && testEdge->crossesEdge(edge, intersectRange)) {
+    if (intersectRange != nullptr && testEdge->crossesEdge(edge, intersectRange)) {
       block(intersectRange->middleIntersection());
     }
   }
