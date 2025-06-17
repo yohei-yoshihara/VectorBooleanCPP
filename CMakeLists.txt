@@ -45,7 +45,5 @@ target_link_libraries(example PRIVATE vectorboolean)
 
 # ***** test *****
 enable_testing()
-# testsフォルダを追加する
 add_subdirectory(tests)
-# 二つのテストを追加する
 add_test(NAME test_main COMMAND $<TARGET_FILE:test_main>)
