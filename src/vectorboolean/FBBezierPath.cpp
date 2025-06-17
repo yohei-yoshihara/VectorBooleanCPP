@@ -1,5 +1,6 @@
 /*
 Copyright (c) 2011 Andrew Finnell
+Copyright (c) 2025 - Yohei Yoshihara
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
