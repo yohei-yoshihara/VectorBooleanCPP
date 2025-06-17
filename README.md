@@ -1,6 +1,12 @@
 # VectorBoolean C++
 
-This project is a port of the original Objective-C code to C++.
+This project is a port of the original Objective-C VectorBoolean library to C++.
+VectorBoolean is bezier path boolean operation library. The following operations are supported:
+
+* union
+* intersect
+* difference
+* xor
 
 Original article and code:
 
