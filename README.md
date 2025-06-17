@@ -11,7 +11,7 @@ VectorBoolean is bezier path boolean operation library. The following operations
 Original article and code:
 
 * Article: https://losingfight.com/blog/2011/07/07/how-to-implement-boolean-operations-on-bezier-paths-part-1/
-* Code: https://github.com/adamwulf/vectorboolean
+* Code: https://bitbucket.org/andyfinnell/vectorboolean
 
 ## License
 
