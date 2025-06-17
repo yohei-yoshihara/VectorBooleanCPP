@@ -1,6 +1,11 @@
 # VectorBoolean C++
 
+This project is a port of the original Objective-C code to C++.
+
+Original Objective-C code:
 https://github.com/adamwulf/vectorboolean
+
+## LICENSE
 
 Copyright (c) 2011 Andrew Finnell
 
