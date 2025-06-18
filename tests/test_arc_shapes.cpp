@@ -32,10 +32,10 @@ using namespace fb;
 
 TEST_CASE("two arc shapes union") {
   FBBezierPath path1;
-  addArcShape(path1, {{25.f, 0.f}, {50.f, 100.f}});
+  addArcShape(path1, {{25., 0.}, {50., 100.}});
 
   FBBezierPath path2;
-  addArcShape(path2, {{0.f, 25.f}, {100.f, 50.f}});
+  addArcShape(path2, {{0., 25.}, {100., 50.}});
 
   auto result = path1.unionWithPath(path2);
 
@@ -108,10 +108,10 @@ TEST_CASE("two arc shapes union") {
 
 TEST_CASE("two arc shapes intersect") {
   FBBezierPath path1;
-  addArcShape(path1, {{25.f, 0.f}, {50.f, 100.f}});
+  addArcShape(path1, {{25., 0.}, {50., 100.}});
 
   FBBezierPath path2;
-  addArcShape(path2, {{0.f, 25.f}, {100.f, 50.f}});
+  addArcShape(path2, {{0., 25.}, {100., 50.}});
 
   auto result = path1.intersectWithPath(path2);
 
@@ -152,10 +152,10 @@ TEST_CASE("two arc shapes intersect") {
 
 TEST_CASE("two arc shapes difference") {
   FBBezierPath path1;
-  addArcShape(path1, {{25.f, 0.f}, {50.f, 100.f}});
+  addArcShape(path1, {{25., 0.}, {50., 100.}});
 
   FBBezierPath path2;
-  addArcShape(path2, {{0.f, 25.f}, {100.f, 50.f}});
+  addArcShape(path2, {{0., 25.}, {100., 50.}});
 
   auto result = path1.differenceWithPath(path2);
 
@@ -220,10 +220,10 @@ TEST_CASE("two arc shapes difference") {
 
 TEST_CASE("two arc shapes xor") {
   FBBezierPath path1;
-  addArcShape(path1, {{25.f, 0.f}, {50.f, 100.f}});
+  addArcShape(path1, {{25., 0.}, {50., 100.}});
 
   FBBezierPath path2;
-  addArcShape(path2, {{0.f, 25.f}, {100.f, 50.f}});
+  addArcShape(path2, {{0., 25.}, {100., 50.}});
 
   auto result = path1.xorWithPath(path2);
 

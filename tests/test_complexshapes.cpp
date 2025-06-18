@@ -32,11 +32,11 @@ using namespace fb;
 
 TEST_CASE("complex shapes union") {
   FBBezierPath path1;
-  addRectangle(path1, {{50.f, 50.f}, {350.f, 300.f}});
-  addCircle(path1, {210.f, 200.f}, 125.f);
+  addRectangle(path1, {{50., 50.}, {350., 300.}});
+  addCircle(path1, {210., 200.}, 125.);
 
   FBBezierPath path2;
-  addRectangle(path2, {{180.f, 5.f}, {100.f, 400.f}});
+  addRectangle(path2, {{180., 5.}, {100., 400.}});
 
   auto result = path1.unionWithPath(path2);
 
@@ -157,11 +157,11 @@ TEST_CASE("complex shapes union") {
 
 TEST_CASE("complex shapes intersect") {
   FBBezierPath path1;
-  addRectangle(path1, {{50.f, 50.f}, {350.f, 300.f}});
-  addCircle(path1, {210.f, 200.f}, 125.f);
+  addRectangle(path1, {{50., 50.}, {350., 300.}});
+  addCircle(path1, {210., 200.}, 125.);
 
   FBBezierPath path2;
-  addRectangle(path2, {{180.f, 5.f}, {100.f, 400.f}});
+  addRectangle(path2, {{180., 5.}, {100., 400.}});
 
   auto result = path1.intersectWithPath(path2);
 
@@ -242,11 +242,11 @@ TEST_CASE("complex shapes intersect") {
 
 TEST_CASE("complex shapes difference") {
   FBBezierPath path1;
-  addRectangle(path1, {{50.f, 50.f}, {350.f, 300.f}});
-  addCircle(path1, {210.f, 200.f}, 125.f);
+  addRectangle(path1, {{50., 50.}, {350., 300.}});
+  addCircle(path1, {210., 200.}, 125.);
 
   FBBezierPath path2;
-  addRectangle(path2, {{180.f, 5.f}, {100.f, 400.f}});
+  addRectangle(path2, {{180., 5.}, {100., 400.}});
 
   auto result = path1.differenceWithPath(path2);
 
@@ -343,11 +343,11 @@ TEST_CASE("complex shapes difference") {
 
 TEST_CASE("complex shapes xor") {
   FBBezierPath path1;
-  addRectangle(path1, {{50.f, 50.f}, {350.f, 300.f}});
-  addCircle(path1, {210.f, 200.f}, 125.f);
+  addRectangle(path1, {{50., 50.}, {350., 300.}});
+  addCircle(path1, {210., 200.}, 125.);
 
   FBBezierPath path2;
-  addRectangle(path2, {{180.f, 5.f}, {100.f, 400.f}});
+  addRectangle(path2, {{180., 5.}, {100., 400.}});
 
   auto result = path1.xorWithPath(path2);
 

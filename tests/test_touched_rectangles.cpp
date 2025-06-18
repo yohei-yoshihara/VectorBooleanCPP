@@ -32,10 +32,10 @@ using namespace fb;
 
 TEST_CASE("touched rectangles union") {
   FBBezierPath path1;
-  addRectangle(path1, {{0.f, 0.f}, {100.f, 100.f}});
+  addRectangle(path1, {{0., 0.}, {100., 100.}});
 
   FBBezierPath path2;
-  addRectangle(path2, {{100.f, 0.f}, {100.f, 100.f}});
+  addRectangle(path2, {{100., 0.}, {100., 100.}});
 
   auto result = path1.unionWithPath(path2);
 
@@ -92,10 +92,10 @@ TEST_CASE("touched rectangles union") {
 
 TEST_CASE("touched rectangles intersect") {
   FBBezierPath path1;
-  addRectangle(path1, {{0.f, 0.f}, {100.f, 100.f}});
+  addRectangle(path1, {{0., 0.}, {100., 100.}});
 
   FBBezierPath path2;
-  addRectangle(path2, {{100.f, 0.f}, {100.f, 100.f}});
+  addRectangle(path2, {{100., 0.}, {100., 100.}});
 
   auto result = path1.intersectWithPath(path2);
   CHECK_EQ(result.size(), 0);
@@ -103,10 +103,10 @@ TEST_CASE("touched rectangles intersect") {
 
 TEST_CASE("touched rectangles difference") {
   FBBezierPath path1;
-  addRectangle(path1, {{0.f, 0.f}, {100.f, 100.f}});
+  addRectangle(path1, {{0., 0.}, {100., 100.}});
 
   FBBezierPath path2;
-  addRectangle(path2, {{100.f, 0.f}, {100.f, 100.f}});
+  addRectangle(path2, {{100., 0.}, {100., 100.}});
 
   auto result = path1.differenceWithPath(path2);
 
@@ -139,10 +139,10 @@ TEST_CASE("touched rectangles difference") {
 
 TEST_CASE("touched rectangles xor") {
   FBBezierPath path1;
-  addRectangle(path1, {{0.f, 0.f}, {100.f, 100.f}});
+  addRectangle(path1, {{0., 0.}, {100., 100.}});
 
   FBBezierPath path2;
-  addRectangle(path2, {{100.f, 0.f}, {100.f, 100.f}});
+  addRectangle(path2, {{100., 0.}, {100., 100.}});
 
   auto result = path1.xorWithPath(path2);
 

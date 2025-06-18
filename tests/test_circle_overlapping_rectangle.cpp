@@ -32,10 +32,10 @@ using namespace fb;
 
 TEST_CASE("circle overlapping rectangle") {
   FBBezierPath path1;
-  addRectangle(path1, {{50.f, 50.f}, {300.f, 200.f}});
+  addRectangle(path1, {{50., 50.}, {300., 200.}});
 
   FBBezierPath path2;
-  addCircle(path2, {355.f, 240.f}, 125.f);
+  addCircle(path2, {355., 240.}, 125.);
 
   auto result = path1.unionWithPath(path2);
 
@@ -100,10 +100,10 @@ TEST_CASE("circle overlapping rectangle") {
 
 TEST_CASE("circle overlapping intersect") {
   FBBezierPath path1;
-  addRectangle(path1, {{50.f, 50.f}, {300.f, 200.f}});
+  addRectangle(path1, {{50., 50.}, {300., 200.}});
 
   FBBezierPath path2;
-  addCircle(path2, {355.f, 240.f}, 125.f);
+  addCircle(path2, {355., 240.}, 125.);
 
   auto result = path1.intersectWithPath(path2);
 
@@ -144,10 +144,10 @@ TEST_CASE("circle overlapping intersect") {
 
 TEST_CASE("circle overlapping difference") {
   FBBezierPath path1;
-  addRectangle(path1, {{50.f, 50.f}, {300.f, 200.f}});
+  addRectangle(path1, {{50., 50.}, {300., 200.}});
 
   FBBezierPath path2;
-  addCircle(path2, {355.f, 240.f}, 125.f);
+  addCircle(path2, {355., 240.}, 125.);
 
   auto result = path1.differenceWithPath(path2);
 
@@ -196,10 +196,10 @@ TEST_CASE("circle overlapping difference") {
 
 TEST_CASE("circle overlapping xor") {
   FBBezierPath path1;
-  addRectangle(path1, {{50.f, 50.f}, {300.f, 200.f}});
+  addRectangle(path1, {{50., 50.}, {300., 200.}});
 
   FBBezierPath path2;
-  addCircle(path2, {355.f, 240.f}, 125.f);
+  addCircle(path2, {355., 240.}, 125.);
 
   auto result = path1.xorWithPath(path2);
 
